@@ -5,3 +5,11 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+metrics = Metric.create([
+                          { time: DateTime.now,
+                            name: 'cpu_usage',
+                            value: 10 },
+                          { time: DateTime.now,
+                            name: 'cpu_usage',
+                            value: 10 }
+                        ])
