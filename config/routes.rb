@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       match 'metric_names', to: 'metrics#names', via: :get
       resources :metrics do
       end
+      match 'stats', to: 'stats#index', via: :get
     end
   end
 end
