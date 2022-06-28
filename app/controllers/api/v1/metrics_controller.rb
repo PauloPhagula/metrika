@@ -1,6 +1,7 @@
 class Api::V1::MetricsController < ApplicationController
-  before_action :set_metric, only: %i[ show update destroy ]
+  before_action :set_metric, only: %i[show update destroy]
 
+  # GET /metric_names
   def names
     @distinct_metric_names = Metric.distinct.pluck(:name)
     render json: @distinct_metric_names
@@ -15,7 +16,7 @@ class Api::V1::MetricsController < ApplicationController
 
   # GET /metrics/1
   def show
-    render json: @book
+    render json: @metric
   end
 
   # POST /metrics
@@ -44,13 +45,14 @@ class Api::V1::MetricsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_metric
-      @metric = Metric.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def metric_params
-      params.require(:metric).permit(:time, :name, :value)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_metric
+    @metric = Metric.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def metric_params
+    params.require(:metric).permit(:timepoint, :name, :metric_value)
+  end
 end
