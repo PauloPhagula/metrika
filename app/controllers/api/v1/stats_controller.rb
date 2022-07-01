@@ -10,11 +10,6 @@ class Api::V1::StatsController < ApplicationController
 
     metrics = filter.metric == "all" ? Metric.all : Metric.where(:name => metric)
 
-    # SELECT name, EXTRACT(day FROM timepoint) as x, avg(metric_value) as y
-    # FROM metrics
-    # WHERE name IN ("cpu_usage")
-    #   AND timepoint BETWEEN '2022-06-26' AND '2022-06-29'
-    # GROUP BY name, EXTRACT(day FROM timepoint);
     stats = metrics.where('timepoint BETWEEN ? AND ?', filter.from, filter.to)
            .group("name, EXTRACT(#{filter.by} FROM timepoint)")
            .select('name', "EXTRACT(#{filter.by} FROM timepoint) as x", 'AVG(metric_value) as y')
