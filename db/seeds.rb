@@ -5,11 +5,16 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+def zero_pad(str)
+  format("%02d", str)
+end
+
 metrics = []
 
 1.upto(30) do |i|
   metrics << {
-    timepoint: DateTime.iso8601("2022-06-#{format('%02d', i)}"),
+    timepoint: DateTime.iso8601("2022-06-#{zero_pad(i)}T#{zero_pad(rand(0..23))}:#{zero_pad(rand(0..59))}:00"),
     name: "cpu_usage",
     metric_value: rand(1..100)
   }
