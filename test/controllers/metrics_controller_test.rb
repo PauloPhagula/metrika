@@ -2,7 +2,7 @@ require "test_helper"
 
 class MetricsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @metric = metrics(:one)
+    @metric = metrics(:fix_1)
   end
 
   test "should get index" do

@@ -5,11 +5,14 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-Metric.create([
-  {timepoint: DateTime.iso8601("2022-06-26"),
-   name: "ram",
-   metric_value: 10},
-  {timepoint: DateTime.iso8601("2022-06-27"),
-   name: "ram",
-   metric_value: 10}
-])
+metrics = []
+
+1.upto(30) do |i|
+  metrics << {
+    timepoint: DateTime.iso8601("2022-06-#{format('%02d', i)}"),
+    name: "cpu_usage",
+    metric_value: rand(1..100)
+  }
+end
+
+Metric.create(metrics)

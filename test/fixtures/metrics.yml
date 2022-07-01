@@ -1,11 +1,8 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  timepoint: 2022-06-26 14:13:14
-  name: MyString
-  metric_value: 1
-
-two:
-  timepoint: 2022-06-26 14:13:14
-  name: MyString
-  metric_value: 1
+<% 1.upto(30) do |i| %>
+fix_<%= i %>:
+  timepoint: <%= "2022-06-#{format('%02d', i)}" %>
+  name: cpu_usage
+  metric_value: <%= rand(1..100)  %>
+<% end %>
