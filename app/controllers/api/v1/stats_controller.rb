@@ -1,31 +1,46 @@
 class Api::V1::StatsController < ApplicationController
+
   def index
+    filter = Filter.new(*filter_params)
 
-    metric = params[:metric]
-    if metric.nil? or metric == "all"
-      metrics = Metric.all
-    else
-      metrics = Metric.where(:name => metric)
+    unless filter.valid?
+      return render json: {errors: filter.errors},
+                    status: 400
     end
 
-    by = params[:by]
-    unless ["minute", "hour", "day"].include?(by)
-      raise("Invalid grouping")
-    end
-
-    from = DateTime.iso8601(params[:from])
-    to = DateTime.iso8601(params[:to])
-
+    metrics = filter.metric == "all" ? Metric.all : Metric.where(:name => metric)
 
     # SELECT name, EXTRACT(day FROM timepoint) as x, avg(metric_value) as y
     # FROM metrics
     # WHERE name IN ("cpu_usage")
     #   AND timepoint BETWEEN '2022-06-26' AND '2022-06-29'
     # GROUP BY name, EXTRACT(day FROM timepoint);
-    stats = metrics.where('timepoint BETWEEN ? AND ?', from, to)
-           .group("name, EXTRACT(#{by} FROM timepoint)")
-           .select('name', "EXTRACT(#{by} FROM timepoint) as x", 'AVG(metric_value) as y')
+    stats = metrics.where('timepoint BETWEEN ? AND ?', filter.from, filter.to)
+           .group("name, EXTRACT(#{filter.by} FROM timepoint)")
+           .select('name', "EXTRACT(#{filter.by} FROM timepoint) as x", 'AVG(metric_value) as y')
 
     render json: stats
+  end
+
+  def filter_params
+    params.require([:metric, :from, :to, :by])
+  end
+
+  class Filter
+    include ActiveModel::Validations
+
+    attr_reader :metric, :from, :to, :by
+
+    validates :metric, :from, :to, :by, presence: true
+    validates :from, date: { before: :to }
+    validates :to, date: { before_or_equal_to: Proc.new { Time.now } }
+    validates :by, inclusion: { in: %w(minute hour day) }
+
+    def initialize(metric, from, to, by)
+      @metric = metric
+      @from = DateTime.iso8601(from)
+      @to = DateTime.iso8601(to)
+      @by = by
+    end
   end
 end

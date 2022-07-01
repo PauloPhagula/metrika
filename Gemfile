@@ -8,6 +8,8 @@ gem "rails", "~> 7.0.3"
 
 gem "rack-cors"
 
+gem "date_validator"
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
