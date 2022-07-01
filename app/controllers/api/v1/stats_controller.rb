@@ -7,7 +7,7 @@ class Api::V1::StatsController < ApplicationController
         status: 400
     end
 
-    metrics = filter.metric == "all" ? Metric.all : Metric.where(name: metric)
+    metrics = filter.metric == "all" ? Metric.all : Metric.where(name: filter.metric)
 
     stats = metrics.where("timepoint BETWEEN ? AND ?", filter.from, filter.to)
       .group("name, EXTRACT(#{filter.by} FROM timepoint)")
