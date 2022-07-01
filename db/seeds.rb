@@ -5,11 +5,11 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-metrics = Metric.create([
-                          { timepoint: DateTime.iso8601("2022-06-26"),
-                            name: 'ram',
-                            metric_value: 10 },
-                          { timepoint: DateTime.iso8601("2022-06-27"),
-                            name: 'ram',
-                            metric_value: 10 }
-                        ])
+Metric.create([
+  {timepoint: DateTime.iso8601("2022-06-26"),
+   name: "ram",
+   metric_value: 10},
+  {timepoint: DateTime.iso8601("2022-06-27"),
+   name: "ram",
+   metric_value: 10}
+])
