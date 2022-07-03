@@ -15,7 +15,7 @@ class MetricTest < ActiveSupport::TestCase
     assert_not metric.save
   end
 
-  test "should prevent saving metrics future dates" do
+  test "should prevent saving metrics with future dates" do
     metric = Metric.new(
       timepoint: DateTime.now + 1.day,
       name: "A name with invalid valid chars",
