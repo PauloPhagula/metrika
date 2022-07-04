@@ -12,6 +12,7 @@ class Api::V1::StatsController < ApplicationController
     stats = metrics.where("timepoint BETWEEN ? AND ?", filter.from, filter.to)
       .group("name, EXTRACT(#{filter.by} FROM timepoint)")
       .select("name", "EXTRACT(#{filter.by} FROM timepoint) as x", "AVG(metric_value) as y")
+      .order(:x)
 
     render json: stats
   end
@@ -32,8 +33,8 @@ class Api::V1::StatsController < ApplicationController
 
     def initialize(metric, from, to, by)
       @metric = metric
-      @from = DateTime.iso8601(from)
-      @to = DateTime.iso8601(to)
+      @from = Time.zone.parse(from)
+      @to = Time.zone.parse(to)
       @by = by
     end
   end
