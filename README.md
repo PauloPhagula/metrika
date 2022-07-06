@@ -1,24 +1,18 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## System requirements
 
-Things you may want to cover:
+- Ruby v 3.1
+- MySQL 5.7
+- Git
+  
+## Local Setup
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- clone the repo `git clone git@github.com:PauloPhagula/metrika.git`
+- `cd` into project folder, and
+- Run `bundle install`
+- Create a mysql db metrika_development: `CREATE DATABASE metrika_development`
+- Edit `config/database.yml` and set db details
+- Run `rails db:migrate`
+- Run `rails db:seed`
+- Run `rails server`
