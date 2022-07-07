@@ -1,5 +1,5 @@
 class Api::V1::MetricsController < ApplicationController
-  before_action :set_metric, only: %i[show update destroy]
+  before_action :set_metric, only: %i[show]
 
   # GET /metric_names
   def names
@@ -28,20 +28,6 @@ class Api::V1::MetricsController < ApplicationController
     else
       render json: @metric.errors, status: :unprocessable_entity
     end
-  end
-
-  # PATCH/PUT /metrics/1
-  def update
-    if @metric.update(metric_params)
-      render json: @metric
-    else
-      render json: @metric.errors, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /metrics/1
-  def destroy
-    @metric.destroy
   end
 
   private

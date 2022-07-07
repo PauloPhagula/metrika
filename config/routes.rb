@@ -5,9 +5,8 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       match "metric_names", to: "metrics#names", via: :get
-      resources :metrics do
-      end
-      match "stats", to: "stats#index", via: :get
+      resources :metrics, only: %i[index show create]
+      resources :stats, only: %i[index]
     end
   end
 end

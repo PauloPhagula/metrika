@@ -24,19 +24,4 @@ class MetricsControllerTest < ActionDispatch::IntegrationTest
     get api_v1_metric_url(@metric)
     assert_response :success
   end
-
-  test "should update metric" do
-    patch api_v1_metric_url(@metric),
-      params: {metric: {name: @metric.name, timepoint: @metric.timepoint, metric_value: @metric.metric_value}},
-      as: :json
-    assert_response :success
-  end
-
-  test "should destroy metric" do
-    assert_difference("Metric.count", -1) do
-      delete api_v1_metric_url(@metric)
-    end
-
-    assert_response :success
-  end
 end
