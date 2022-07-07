@@ -12,6 +12,7 @@ end
 
 metrics = []
 
+# TODO: Use previous month, rather than a fixed year and month
 1.upto(30) do |i|
   metrics << {
     timepoint: DateTime.iso8601("2022-06-#{zero_pad(i)}T#{zero_pad(rand(0..23))}:#{zero_pad(rand(0..59))}:00"),
