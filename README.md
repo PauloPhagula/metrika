@@ -2,8 +2,8 @@
 
 ## System requirements
 
-- Ruby v 3.1
-- MySQL 5.7
+- Ruby v3.1
+- MySQL v5.7
 - Git
   
 ## Local Setup
