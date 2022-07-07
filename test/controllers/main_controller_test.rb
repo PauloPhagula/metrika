@@ -1,8 +1,8 @@
 require "test_helper"
 
 class MainControllerTest < ActionDispatch::IntegrationTest
-  test "should get index" do
+  test "should redirect to frontend" do
     get root_url
-    assert_response :success
+    assert_response :found
   end
 end

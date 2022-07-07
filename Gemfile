@@ -79,3 +79,4 @@ group :test do
 end
 
 gem "standard", group: [:development, :test]
+gem 'dotenv-rails', groups: [:development, :test]
