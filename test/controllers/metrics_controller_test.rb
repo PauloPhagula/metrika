@@ -10,6 +10,30 @@ class MetricsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should fail to create a metric with invalid name" do
+    post api_v1_metrics_url,
+      params: {metric: {name: "%", timepoint: DateTime.now.end_of_day, metric_value: @metric.metric_value}},
+      as: :json
+
+    assert_response :unprocessable_entity
+  end
+
+  test "should fail to create a metric with invalid value" do
+    post api_v1_metrics_url,
+      params: {metric: {name: @metric.name, timepoint: DateTime.now.end_of_day, metric_value: -1}},
+      as: :json
+
+    assert_response :unprocessable_entity
+  end
+
+  test "should fail to create a metric in the future" do
+    post api_v1_metrics_url,
+      params: {metric: {name: @metric.name, timepoint: DateTime.now.end_of_day, metric_value: @metric.metric_value}},
+      as: :json
+
+    assert_response :unprocessable_entity
+  end
+
   test "should create metric" do
     assert_difference("Metric.count") do
       post api_v1_metrics_url,
